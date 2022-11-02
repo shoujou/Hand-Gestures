@@ -3,7 +3,7 @@ import cv2
 import datetime
 import os
 
-path = './'
+path = './data'
 NUMBER = 100
 
 
@@ -67,7 +67,7 @@ def save_frame_camera_key(device_num, dir_path, basename,  ext='jpg', delay=1, w
 if __name__ == "__main__":
     gesture = input("ジェスチャー：")
 
-    path = path + gesture
+    path = os.path.join(path, gesture)
     now = datetime.datetime.now()
 
     save_frame_camera_key(0, path, now.strftime('%Y%m%d_%H%M'))
