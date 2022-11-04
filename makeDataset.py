@@ -4,18 +4,23 @@ import datetime
 import os
 
 path = './data'
-NUMBER = 100
+NUMBER = 300  # 枚数
 
 
-def make_mask(frame):
-    im_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+def make_mask(img):
+    im_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    # 閾値の設定
+    #threshold = 100
+
+# 二値化(閾値100を超えた画素を255にする。)
+    #ret, output = cv2.threshold(im_gray, threshold, 255, cv2.THRESH_BINARY)
     th, output = cv2.threshold(
         im_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    # print(th)  # 87.0
+    print(th)  # 87.0
 
     # 白黒反転
-    output = 255 - output
+    #output = 255 - output
     cv2.imshow("otsu", output)
 
     return output
@@ -42,8 +47,8 @@ def save_frame_camera_key(device_num, dir_path, basename,  ext='jpg', delay=1, w
     while True:
         ret, frame = cap.read()
         frame = cv2.flip(frame, 1)
-        cv2.rectangle(frame, (xmin, ymin), (xmax, ymax),
-                      (0, 0, 255), 2)  # 指定範囲に赤枠6
+        cv2.rectangle(frame, (xmin-2, ymin-2), (xmax+2, ymax+2),
+                      (0, 0, 255), 2)  # 指定範囲に赤枠2
         cv2.imshow(window_name, frame)
         dataframe = frame[ymin:ymax, xmin:xmax]  # 背
         mask_img = make_mask(dataframe)
