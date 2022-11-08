@@ -1,19 +1,9 @@
-import cv2
-img = cv2.imread("cat.png")
-img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+import sys,cv2
 
-ret, thresh = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY)
-contours, hierarchy = cv2.findContours(
-    thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+# 対象画像読み込み
+img = cv2.imread("archive/test/test/1/901.jpg",cv2.IMREAD_COLOR)
 
-color = (255, 255, 0)
-
-for contour in contours:
-
-    # 境界の描画 ( img データに contours データをマージ )
-    cv2.drawContours(img, contours, -1, color, 2)
-
-cv2.imshow('conturing', img)
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# 画像の大きさを取得
+height, width, channels = img.shape[:3]
+print("width: " + str(width))
+print("height: " + str(height))

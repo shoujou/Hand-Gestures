@@ -29,7 +29,7 @@ def make_mask(img):
 def save_frame_camera_key(device_num, dir_path, basename,  ext='jpg', delay=1, window_name='frame'):
     # 認識範囲
     xmin, xmax = 240, 440
-    ymin, ymax = 120, 360
+    ymin, ymax = 120, 320
     cap = cv2.VideoCapture(device_num)
     save_mode = False
 
@@ -41,7 +41,7 @@ def save_frame_camera_key(device_num, dir_path, basename,  ext='jpg', delay=1, w
     os.makedirs(ori_path, exist_ok=True)
     os.makedirs(mask_path, exist_ok=True)
 
-    print(cap.set(cv2.CAP_PROP_FPS, 3))
+    #print(cap.set(cv2.CAP_PROP_FPS, 3))
 
     n = 0
     while True:
@@ -58,10 +58,12 @@ def save_frame_camera_key(device_num, dir_path, basename,  ext='jpg', delay=1, w
         elif key == ord('q'):
             break
         if save_mode == True:
+            dst_frame = cv2.resize(dataframe, dsize=(50, 50)) #dataset変形
+            dst_mask = cv2.resize(mask_img, dsize=(50, 50)) 
             cv2.imwrite('{}/{}_{}.{}'.format(ori_path,
-                        basename, n, ext), dataframe)
+                        basename, n, ext), dst_frame)
             cv2.imwrite('{}/{}_{}.{}'.format(mask_path,
-                        basename, n, ext), mask_img)
+                        basename, n, ext), dst_mask)
             n += 1
             if n == NUMBER:
                 break
